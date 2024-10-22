@@ -29,7 +29,7 @@ async def upload_csv(file: UploadFile = File(...)):
     
     try:
         # Read the CSV file contents into a pandas DataFrame
-        df = pd.read_csv(file.file)
+        df = pd.read_csv(file.file, header=0)
         
         # Perform the ACH calculation
         ach = calculate_ach(df)
