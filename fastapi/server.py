@@ -10,14 +10,20 @@ UPLOAD_DIR = "./uploads"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 
-def calculate_ach(df: DataFrame):
-    # TODO: add logic to calculating ach
-    return 30.0
+def calculate_ach(co2_data: DataFrame):
+    co2_start = co2_data['CO2 Level (ppm)'].iloc[0]
+    co2_end = co2_data['CO2 Level (ppm)'].iloc[-1]
+    ach = (co2_start - co2_end) / len(co2_data)
+    return ach
 
 
 def categorize_insulation(ach: float):
-    # TODO: add logic to categorize insulation based on ach
-    return "good"
+    if ach < 0.0:
+        return "Very Bad Isolation"
+    elif ach < 0.25:
+        return "Bad Isolation"
+    else:
+        return "Good Isolation"
 
 
 
