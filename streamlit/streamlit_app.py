@@ -54,19 +54,12 @@ def plot_speedometer(value, min_value, max_value):
     st.plotly_chart(fig)
 
 
-
 def calculate_ach(df):
-    csv_data = df.to_csv(index=False)
-    response = requests.post(FASTAPI_URL, files={"file": ('data.csv', io.StringIO(csv_data), "text/csv")})
-
-    # Handle the response from the FastAPI server
-    if response.status_code == 200:
-        result = response.json()
-        # st.write("Air Changes per Hour (ACH):", result['ach'])
-        # st.write("Insulation Category:", result['insulation'])
-        plot_speedometer(result['ach'], -1, 1)
-    else:
-        st.error("Error processing file: " + response.text)
+    df_data = df.to_csv(index=False)
+    df_start = df['CO2 Level (ppm)'].iloc[0]
+    df_end = df['CO2 Level (ppm)'].iloc[-1]
+    ach = (df_start - df_end) / len(df)
+    plot_speedometer(ach, -1, 1)
 
 
 # Function to convert uploaded file to CSV
