@@ -18,9 +18,9 @@ def calculate_ach(co2_data: DataFrame):
 
 
 def categorize_insulation(ach: float):
-    if ach < 0.0:
+    if ach < -0.1:
         return "Very Bad Isolation"
-    elif ach < 0.25:
+    elif ach < 0.1:
         return "Bad Isolation"
     else:
         return "Good Isolation"
